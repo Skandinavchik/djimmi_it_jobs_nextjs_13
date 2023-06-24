@@ -6,9 +6,9 @@ const SignIn = () => {
 
 
     return (
-        <div>
+        <main>
             sign in
-        </div>
+        </main>
     );
 };
 

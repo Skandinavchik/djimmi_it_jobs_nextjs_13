@@ -44,7 +44,7 @@ const Footer = () => {
     const footerNavItemsList = renderFooterNavItems(footerNavItems);
 
     return (
-        <footer className='bg-light pb-20 before:block before:h-20 before:border-t-[1px] before:border-mainGrey'>
+        <footer className='bg-light py-20 border-mainGrey border-t'>
             <div className='container'>
                 <nav className='flex justify-between items-center'>
                     <Link href={'/'} className='text-dark text-2xl font-bold'>
