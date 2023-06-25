@@ -69,7 +69,7 @@ const Carousel = () => {
                 >
                     <p className='max-w-[500px] text-center text-lg font-light italic mb-6'>{carouselItems[index].review}</p>
                     <div className='flex justify-center items-center gap-5'>
-                        <div className='w-12 h-12 rounded-full bg-mainGreen flex justify-center items-center text-xl text-light'>{carouselItems[index].fullName.slice(0, 1)}</div>
+                        <div className='w-12 h-12 rounded-full bg-mainGrey flex justify-center items-center text-xl text-light'>{carouselItems[index].fullName.slice(0, 1)}</div>
                         <p className='font-light'>{`${carouselItems[index].fullName}, ${carouselItems[index].position}`}</p>
                     </div>
                 </motion.div>

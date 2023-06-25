@@ -103,7 +103,7 @@ const Home = () => {
                         Djimmi for hiring
                     </h5>
 
-                    <h2 className='text-5xl font-bold text-center mb-6'>
+                    <h2 className='text-5xl font-bold text-center mb-8'>
                         <span className='block'>Explore 70,000+ candidates,</span>
                         <span className='block '>remotely & on your own</span>
                     </h2>
@@ -150,7 +150,7 @@ const Home = () => {
                         Djimmi for job search
                     </h5>
 
-                    <h2 className='text-5xl font-bold text-center mb-6'>
+                    <h2 className='text-5xl font-bold text-center mb-8'>
                         <span className='block'>Find jobs that pay over $5K/mo,</span>
                         <span className='block '>globally & anonymously</span>
                     </h2>
