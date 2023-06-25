@@ -144,9 +144,6 @@ const Home = () => {
                 </div>
             </section>
 
-
-
-
             <section className='py-20 bg-light border-t border-mainGrey'>
                 <div className='container'>
                     <h5 className='text-center text-mainGreen text-xl font-semibold mb-6'>
@@ -203,13 +200,6 @@ const Home = () => {
                 </div>
             </section>
 
-
-
-
-
-
-
-
             <section className='py-20'>
                 <div className='container'>
                     <h2 className='text-5xl font-black text-center mb-6 text-light'>
@@ -231,7 +221,6 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-
         </main>
     );
 };
