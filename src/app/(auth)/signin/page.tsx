@@ -7,7 +7,7 @@ const SignIn = () => {
 
     const session = useSession();
 
-    // console.log(session);
+    console.log(session);
 
     return (
         <main>
@@ -19,8 +19,9 @@ const SignIn = () => {
                             <SignInForm />
                         </div>
                         <div className='w-[250px]'>
-                            <button className='block bg-white w-full rounded-md border border-mainGrey text-xl text-left px-3 py-2 mb-5 hover:shadow-md transition-all duration-300' onClick={() => signIn('google')}><span className="icon-google mr-5 text-base" />Log In with Google</button>
-                            <button className='block bg-white w-full rounded-md border border-mainGrey text-xl text-left px-3 py-2 mb-5 hover:shadow-md transition-all duration-300' onClick={() => signOut()}><span className="icon-github mr-5 text-base" />Log In with Github</button>
+                            <button className='block bg-white w-full rounded-md border border-mainGrey text-lg text-left px-3 py-2 mb-4 hover:shadow-md transition-all duration-300' onClick={() => signIn('google')}><span className="icon-google mr-5 text-base" />Log In with Google</button>
+                            <button className='block bg-white w-full rounded-md border border-mainGrey text-lg text-left px-3 py-2 mb-4 hover:shadow-md transition-all duration-300' onClick={() => signIn('github')}><span className="icon-github mr-5 text-base" />Log In with Github</button>
+                            <button className='block bg-white w-full rounded-md border border-mainGrey text-lg text-left px-3 py-2 mb-4 hover:shadow-md transition-all duration-300' onClick={() => signOut()}>Log Out</button>
                         </div>
                     </div>
                 </div>
