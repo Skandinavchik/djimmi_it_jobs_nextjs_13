@@ -8,9 +8,10 @@ interface Params {
 
 const GET = async (req: NextRequest, { params }: { params: Params }) => {
     try {
+        const { id } = params;
         const user = await prisma.user.findUnique({
             where: {
-                id: +params.id,
+                id,
             },
         });
 
@@ -18,23 +19,30 @@ const GET = async (req: NextRequest, { params }: { params: Params }) => {
             status: 'success',
             user
         };
+        const notFoundResponse = {
+            status: 'failed',
+            message: `User with ID: ${id} not found`,
+        };
+
+        if (!user) return new NextResponse(JSON.stringify(notFoundResponse), { status: 404 });
 
         return new NextResponse(JSON.stringify(response), { status: 200 });
 
     } catch (error) {
-        console.log(error);
+        return new NextResponse(JSON.stringify(error), { status: 500 });
     }
 };
 
 const DELETE = async (req: NextRequest, { params }: { params: Params }) => {
     try {
+        const { id } = params;
         await prisma.user.delete({
             where: {
-                id: +params.id,
+                id,
             },
         });
 
-        return new NextResponse(`User with ID: ${params.id} was deleted`, { status: 200 });
+        return new NextResponse(`User with ID: ${id} was deleted`, { status: 200 });
 
     } catch (error) {
         console.log(error);

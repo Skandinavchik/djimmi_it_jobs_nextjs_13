@@ -1,4 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
+import { signIn } from "next-auth/react";
 
 
 interface IFormInputs {
@@ -15,8 +16,9 @@ const SignInForm = () => {
         },
     });
 
-    const onSubmit: SubmitHandler<IFormInputs> = (data: IFormInputs) => {
-        console.log(data);
+    const onSubmit: SubmitHandler<IFormInputs> = async (data: IFormInputs) => {
+        const { email, password } = data;
+        await signIn('credentials', { email, password });
     };
 
     return (

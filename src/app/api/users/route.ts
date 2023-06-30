@@ -29,21 +29,20 @@ interface IUser {
 const POST = async (req: NextRequest) => {
     try {
         const data: IUser = await req.json();
-        const { username, email, password } = data;
-
-        const hashedPassword = await bcrypt.hash(password, 12);
 
         const user = await prisma.user.create({
             data: {
-                username,
-                email,
-                password: hashedPassword,
+                username: data.username,
+                email: data.email,
+                password: await bcrypt.hash(data.password, 12),
             },
         });
 
+        const {password, ...userWithoutPassword} = user;
+
         const response = {
             status: 'success',
-            user
+            user: userWithoutPassword
         };
 
         return new NextResponse(JSON.stringify(response), { status: 201 });
