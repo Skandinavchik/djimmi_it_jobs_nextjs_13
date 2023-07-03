@@ -24,7 +24,7 @@ const POST = async (req: NextRequest) => {
 
         const { password, ...userWithoutPassword } = user;
 
-        const token = signToken(user.id);
+        const token = await signToken(user.id);
 
         const response = NextResponse.json({
             status: 'success',

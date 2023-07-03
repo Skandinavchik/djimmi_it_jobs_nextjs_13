@@ -1,4 +1,4 @@
-import prisma from "@/utils/dataBase";
+import { prisma } from "@/utils/prismaClient";
 import { NextRequest, NextResponse } from "next/server";
 
 

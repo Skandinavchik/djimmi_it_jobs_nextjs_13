@@ -18,16 +18,12 @@ const signIn = async (data: IFormInputs) => {
 
 const SignInForm = () => {
 
-    const { register, handleSubmit, reset, setFocus, formState: { errors } } = useForm<IFormInputs>({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<IFormInputs>({
         defaultValues: {
             email: '',
             password: '',
         },
     });
-
-    useEffect(() => {
-        setFocus('email');
-    }, [setFocus]);
 
     const onSubmit: SubmitHandler<IFormInputs> = async (data: IFormInputs) => {
         await signIn(data);

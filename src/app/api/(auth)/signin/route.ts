@@ -22,7 +22,7 @@ const POST = async (req: NextRequest) => {
         if (user && (await bcrypt.compare(body.password, user.password))) {
             const { password, ...userWithoutPassword } = user;
 
-            const token = signToken(user.id);
+            const token = await signToken(user.id);
 
             const response = NextResponse.json({
                 status: 'success',
