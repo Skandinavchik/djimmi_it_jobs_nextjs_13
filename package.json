@@ -11,9 +11,10 @@
     "dependencies": {
         "@headlessui/react": "^1.7.15",
         "@heroicons/react": "^2.0.18",
-        "@prisma/client": "^4.16.1",
+        "@prisma/client": "^4.16.2",
         "@tailwindcss/forms": "^0.5.3",
         "@types/bcrypt": "^5.0.0",
+        "@types/jsonwebtoken": "^9.0.2",
         "@types/node": "^20.3.2",
         "@types/react": "18.2.13",
         "@types/react-dom": "18.2.6",
@@ -22,16 +23,17 @@
         "eslint": "8.43.0",
         "eslint-config-next": "13.4.7",
         "framer-motion": "^10.12.17",
+        "jsonwebtoken": "^9.0.0",
+        "ky": "^0.33.3",
         "next": "13.4.7",
-        "next-auth": "^4.22.1",
         "postcss": "8.4.24",
         "react": "18.2.0",
         "react-dom": "18.2.0",
-        "react-hook-form": "^7.45.0",
+        "react-hook-form": "^7.45.1",
         "tailwindcss": "3.3.2"
     },
     "devDependencies": {
-        "prisma": "^4.16.1",
+        "prisma": "^4.16.2",
         "typescript": "^5.1.5"
     }
 }

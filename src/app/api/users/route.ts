@@ -1,6 +1,5 @@
-import prisma from "@/utils/dataBase";
-import { NextRequest, NextResponse } from "next/server";
-import bcrypt from 'bcrypt';
+import prisma from "@/utils/prismaClient";
+import { NextResponse } from "next/server";
 
 
 const GET = async () => {
@@ -19,39 +18,6 @@ const GET = async () => {
     }
 };
 
-
-interface IUser {
-    username: string;
-    email: string;
-    password: string;
-};
-
-const POST = async (req: NextRequest) => {
-    try {
-        const data: IUser = await req.json();
-
-        const user = await prisma.user.create({
-            data: {
-                username: data.username,
-                email: data.email,
-                password: await bcrypt.hash(data.password, 12),
-            },
-        });
-
-        const {password, ...userWithoutPassword} = user;
-
-        const response = {
-            status: 'success',
-            user: userWithoutPassword
-        };
-
-        return new NextResponse(JSON.stringify(response), { status: 201 });
-
-    } catch (error) {
-        console.log(error);
-    }
-};
-
 const DELETE = async () => {
     try {
         await prisma.user.deleteMany();
@@ -62,4 +28,4 @@ const DELETE = async () => {
     }
 };
 
-export { GET, POST, DELETE };
+export { GET, DELETE };

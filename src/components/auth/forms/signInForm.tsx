@@ -1,5 +1,7 @@
+'use client';
 import { useForm, SubmitHandler } from "react-hook-form";
-import { signIn } from "next-auth/react";
+import ky from "ky";
+import { useEffect } from "react";
 
 
 interface IFormInputs {
@@ -7,18 +9,29 @@ interface IFormInputs {
     password: string;
 };
 
+const signIn = async (data: IFormInputs) => {
+    return await ky.post('http://localhost:3000/api/signin', {
+        json: data,
+    }).json();
+};
+
+
 const SignInForm = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<IFormInputs>({
+    const { register, handleSubmit, reset, setFocus, formState: { errors } } = useForm<IFormInputs>({
         defaultValues: {
             email: '',
             password: '',
         },
     });
 
+    useEffect(() => {
+        setFocus('email');
+    }, [setFocus]);
+
     const onSubmit: SubmitHandler<IFormInputs> = async (data: IFormInputs) => {
-        const { email, password } = data;
-        await signIn('credentials', { email, password });
+        await signIn(data);
+        reset();
     };
 
     return (
