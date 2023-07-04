@@ -1,9 +1,12 @@
 import Link from "next/link";
+import SignButton from "./auth/signButton";
+import { cookies } from 'next/headers';
 
 
 const NavBar = () => {
 
-
+    const hasCookie = cookies().has('accessToken');
+    console.log(hasCookie);
 
     return (
         <header className='bg-mainGreen h-20 w-full flex justify-center items-center'>
@@ -13,13 +16,10 @@ const NavBar = () => {
                         djimmi
                     </Link>
 
-                    <Link href={'/signin'} className='text-light text-base font-light border rounded-full px-5 py-2 hover:shadow-md transition-all duration-300'>
-                        Sign In
-                    </Link>
+                    <SignButton hasCookie={hasCookie} />
                 </nav>
             </div>
         </header>
-
     );
 };
 

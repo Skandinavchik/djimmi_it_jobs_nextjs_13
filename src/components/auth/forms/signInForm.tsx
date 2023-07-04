@@ -1,6 +1,6 @@
 'use client';
-import { useForm, SubmitHandler } from "react-hook-form";
 import ky from "ky";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useEffect } from "react";
 
 
@@ -9,8 +9,8 @@ interface IFormInputs {
     password: string;
 };
 
-const signIn = async (data: IFormInputs) => {
-    return await ky.post('http://localhost:3000/api/signin', {
+const signIn = async (data: IFormInputs, url: string) => {
+    return await ky.post(url, {
         json: data,
     }).json();
 };
@@ -18,7 +18,7 @@ const signIn = async (data: IFormInputs) => {
 
 const SignInForm = () => {
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<IFormInputs>({
+    const { register, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = useForm<IFormInputs>({
         defaultValues: {
             email: '',
             password: '',
@@ -26,9 +26,15 @@ const SignInForm = () => {
     });
 
     const onSubmit: SubmitHandler<IFormInputs> = async (data: IFormInputs) => {
-        await signIn(data);
+        await signIn(data, 'http://localhost:3000/api/signin');
         reset();
     };
+
+    useEffect(() => {
+        if (isSubmitSuccessful) {
+            window.location.replace('/');
+        }
+    }, [isSubmitSuccessful]);
 
     return (
         <form
