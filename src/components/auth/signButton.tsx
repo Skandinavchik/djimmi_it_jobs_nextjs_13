@@ -1,5 +1,6 @@
 'use client';
 import Link from "next/link";
+import ky from "ky";
 import { useState } from "react";
 
 
@@ -7,18 +8,53 @@ interface IProps {
     hasCookie: boolean;
 };
 
-const menuItems: string[] = ['My Profile', 'Settings', 'Sign Out'];
+interface IMenuItem {
+    title: string;
+    path: string;
+};
+
+const menuItems: IMenuItem[] = [
+    {
+        title: 'My Profile',
+        path: '/profile',
+    },
+    {
+        title: 'Settings',
+        path: '/settings',
+    },
+    {
+        title: 'Sign Out',
+        path: '/api/signout',
+    },
+];
+
+const signOut = async (path: string) => {
+    return await ky.post(`http://localhost:3000${path}`).json()
+        .then(() => window.location.replace('/'))
+        .catch(() => console.log());
+};
 
 
 const SignButton = ({ hasCookie }: IProps) => {
 
     const [isActive, setIsActive] = useState(false);
 
-    const renderMenuItems = (arr: string[]) => {
+    const renderMenuItems = (arr: IMenuItem[]) => {
         return arr.map(item => {
+            if (item.title === 'Sign Out') {
+                return (
+                    <li key={item.title}>
+                        <button onClick={() => signOut(item.path)}>
+                            {item.title}
+                        </button>
+                    </li>
+                );
+            }
             return (
-                <li key={item}>
-                    {item}
+                <li key={item.title}>
+                    <Link href={item.path} >
+                        {item.title}
+                    </Link>
                 </li>
             );
         });

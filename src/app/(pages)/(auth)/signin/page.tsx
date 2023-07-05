@@ -9,7 +9,7 @@ const SignIn = () => {
                 <div className='container'>
                     <div className='w-full flex justify-center items-center'>
                         <div className='w-[500px] px-5 py-8 border border-mainGrey rounded-xl bg-white'>
-                            <h1 className='text-2xl font-normal mb-8'>Log In to Djimmi</h1>
+                            <h1 className='text-2xl font-normal mb-8'>Sign In to Djimmi</h1>
                             <SignInForm />
                         </div>
                     </div>

@@ -6,7 +6,7 @@ import { cookies } from 'next/headers';
 const NavBar = () => {
 
     const hasCookie = cookies().has('accessToken');
-    console.log(hasCookie);
+    
 
     return (
         <header className='bg-mainGreen h-20 w-full flex justify-center items-center'>
