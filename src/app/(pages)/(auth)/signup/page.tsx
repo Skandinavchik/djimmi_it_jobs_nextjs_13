@@ -5,11 +5,11 @@ const SignUp = () => {
 
     return (
         <main>
-            <section className='min-h-[calc(100vh-5rem-193px)] py-20 bg-light'>
+            <section className='bg-light min-h-[calc(100vh-5rem-193px)] py-20'>
                 <div className='container'>
                     <div className='w-full flex justify-center items-center'>
                         <div className='w-[500px] px-5 py-8 border border-mainGrey rounded-xl bg-white'>
-                            <h1 className='text-2xl font-normal mb-8'>Sign Up to Djimmi</h1>
+                            <h1 className='text-2xl font-normal mb-8'>Sign In to Djimmi</h1>
                             <SignUpForm />
                         </div>
                     </div>

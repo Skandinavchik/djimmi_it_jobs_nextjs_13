@@ -1,15 +1,15 @@
 
 
 
-const Blog = () => {
+const Jobs = () => {
 
 
 
     return (
         <main>
-            Blog
+            Jobs
         </main>
     );
 };
 
-export default Blog;
+export default Jobs;

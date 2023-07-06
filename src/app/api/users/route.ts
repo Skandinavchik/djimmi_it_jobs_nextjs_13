@@ -5,13 +5,19 @@ import { NextResponse } from "next/server";
 const GET = async () => {
     try {
         const users = await prisma.user.findMany();
+
+        const usersWithoutPassword = users.map(item => {
+            const { password, ...itemWithoutPassword } = item;
+            return itemWithoutPassword;
+        });
+
         const response = {
             status: 'success',
             results: users.length,
-            users,
+            users: usersWithoutPassword,
         };
 
-        return new NextResponse(JSON.stringify(response), { status: 200 });
+        return NextResponse.json(response, { status: 200 });
 
     } catch (error) {
         console.log(error);
@@ -21,7 +27,7 @@ const GET = async () => {
 const DELETE = async () => {
     try {
         await prisma.user.deleteMany();
-        return new NextResponse('Done', { status: 200 });
+        return NextResponse.json('Done', { status: 200 });
 
     } catch (error) {
         console.log(error);

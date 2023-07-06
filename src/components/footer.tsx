@@ -9,19 +9,19 @@ interface IFooterNavItem {
 const footerNavItems: IFooterNavItem[] = [
     {
         title: 'Blog',
-        path: '/blog',
+        path: '/',
     },
     {
         title: 'Terms of Use',
-        path: '/blog',
+        path: '/',
     },
     {
         title: 'Privacy',
-        path: '/blog',
+        path: '/',
     },
     {
         title: 'Suggest an idea',
-        path: '/blog',
+        path: '/',
     },
     {
         title: 'Donate for Ukraine 🇺🇦',
