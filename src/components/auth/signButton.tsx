@@ -1,7 +1,7 @@
 'use client';
 import Link from "next/link";
 import ky from "ky";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 
 interface IProps {
@@ -39,11 +39,27 @@ const SignButton = ({ hasCookie }: IProps) => {
 
     const [isActive, setIsActive] = useState(false);
 
+    const handleUserMenu = useCallback((e: MouseEvent): void => {
+        const target = e.target as HTMLElement;
+
+        !isActive && target.id === 'btn' ? setIsActive(true) : setIsActive(false);
+
+    }, [isActive]);
+
+    useEffect(() => {
+        document.body.addEventListener('click', handleUserMenu);
+
+        return () => {
+            document.body.removeEventListener('click', handleUserMenu);
+        };
+
+    }, [handleUserMenu]);
+
     const renderMenuItems = (arr: IMenuItem[]) => {
         return arr.map(item => {
             if (item.title === 'Sign Out') {
                 return (
-                    <li key={item.title}>
+                    <li key={item.title} className='text-base font-light px-5 py-2 hover:bg-gray-100'>
                         <button onClick={() => signOut(item.path)}>
                             {item.title}
                         </button>
@@ -51,8 +67,8 @@ const SignButton = ({ hasCookie }: IProps) => {
                 );
             }
             return (
-                <li key={item.title}>
-                    <Link href={item.path} >
+                <li key={item.title} className='text-base font-light px-5 py-2 hover:bg-gray-100'>
+                    <Link href={item.path}>
                         {item.title}
                     </Link>
                 </li>
@@ -65,13 +81,10 @@ const SignButton = ({ hasCookie }: IProps) => {
     if (hasCookie) {
         return (
             <div className='relative'>
-                <button
-                    className='text-light font-light block'
-                    onClick={() => setIsActive(isActive => !isActive)}
-                >
+                <button id="btn" className='text-light font-light block'>
                     User Name
                 </button>
-                <ul className={`${isActive ? 'block' : 'hidden'} w-40 bg-light absolute right-0 rounded-md`}>
+                <ul className={`${isActive ? 'block' : 'hidden'} w-48 mt-2 bg-light absolute right-0 rounded-md py-2 border border-mainGrey`}>
                     {menuItemsList}
                 </ul>
             </div>

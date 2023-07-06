@@ -2,7 +2,6 @@
 import ky from "ky";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useEffect } from "react";
 
 
 interface IFormInputs {
@@ -20,7 +19,7 @@ const signUp = async (data: IFormInputs, url: string) => {
 
 const SignUpForm = () => {
 
-    const { register, handleSubmit, reset, formState: { errors, isSubmitSuccessful, isSubmitting } } = useForm<IFormInputs>({
+    const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<IFormInputs>({
         defaultValues: {
             username: '',
             email: '',
@@ -29,19 +28,16 @@ const SignUpForm = () => {
     });
 
     const onSubmit: SubmitHandler<IFormInputs> = async (data: IFormInputs) => {
-        try {
-            await signUp(data, 'http://localhost:3000/api/signup');
-            reset();
-        } catch (error) {
-            console.log(error);
-        }
+        await signUp(data, 'http://localhost:3000/api/signup')
+            .then(() => {
+                reset();
+                window.location.replace('/profile');
+            })
+            .catch((e) => {
+                reset();
+                console.log(e);
+            });
     };
-
-    useEffect(() => {
-        if (isSubmitSuccessful) {
-            window.location.replace('/profile');
-        }
-    }, [isSubmitSuccessful]);
 
     return (
         <form

@@ -1,7 +1,6 @@
 'use client';
 import ky from "ky";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useEffect } from "react";
 import Link from "next/link";
 
 
@@ -19,7 +18,7 @@ const signIn = async (data: IFormInputs, url: string) => {
 
 const SignInForm = () => {
 
-    const { register, handleSubmit, reset, formState: { errors, isSubmitSuccessful, isSubmitting } } = useForm<IFormInputs>({
+    const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<IFormInputs>({
         defaultValues: {
             email: '',
             password: '',
@@ -27,19 +26,16 @@ const SignInForm = () => {
     });
 
     const onSubmit: SubmitHandler<IFormInputs> = async (data: IFormInputs) => {
-        try {
-            await signIn(data, 'http://localhost:3000/api/signin');
-            reset();
-        } catch (error) {
-            console.log(error);
-        }
+        await signIn(data, 'http://localhost:3000/api/signin')
+            .then(() => {
+                reset();
+                window.location.replace('/jobs');
+            })
+            .catch((e) => {
+                reset();
+                console.log(e);
+            });
     };
-
-    useEffect(() => {
-        if (isSubmitSuccessful) {
-            window.location.replace('/jobs');
-        }
-    }, [isSubmitSuccessful]);
 
     return (
         <form
