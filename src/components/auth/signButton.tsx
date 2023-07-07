@@ -1,16 +1,32 @@
 'use client';
+import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import Link from "next/link";
 import ky from "ky";
+import { decodeJwt } from "jose";
 import { useCallback, useEffect, useState } from "react";
 
 
 interface IProps {
-    hasCookie: boolean;
+    accessCookie: RequestCookie | undefined;
 };
 
 interface IMenuItem {
     title: string;
     path: string;
+};
+
+interface IUser {
+    id: string;
+    username: string;
+    email: string;
+    role: string;
+    createdAt: Date;
+    updatedAt: Date;
+};
+
+interface IUserData {
+    status: string;
+    user: IUser;
 };
 
 const menuItems: IMenuItem[] = [
@@ -28,6 +44,15 @@ const menuItems: IMenuItem[] = [
     },
 ];
 
+const getUserData = async (token: string): Promise<IUserData | undefined> => {
+    try {
+        const decodedToken = decodeJwt(token);
+        return await ky(`http://localhost:3000/api/users/${decodedToken.id}`).json<IUserData>();
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 const signOut = async (path: string) => {
     return await ky.post(`http://localhost:3000${path}`).json()
         .then(() => window.location.replace('/'))
@@ -35,11 +60,25 @@ const signOut = async (path: string) => {
 };
 
 
-const SignButton = ({ hasCookie }: IProps) => {
+const SignButton = ({ accessCookie }: IProps) => {
 
-    const [isActive, setIsActive] = useState(false);
+    const [isActive, setIsActive] = useState<boolean>(false);
+    const [userData, setUserData] = useState<IUser>();
 
-    const handleUserMenu = useCallback((e: MouseEvent): void => {
+    useEffect(() => {
+        if (accessCookie?.name === 'accessToken') {
+
+            getUserData(accessCookie.value)
+                .then(data => {
+                    if (data) {
+                        setUserData(data.user);
+                    }
+                })
+                .catch(e => console.log(e));
+        }
+    }, [accessCookie?.name, accessCookie?.value]);
+
+    const toggleUserMenu = useCallback((e: MouseEvent): void => {
         const target = e.target as HTMLElement;
 
         !isActive && target.id === 'btn' ? setIsActive(true) : setIsActive(false);
@@ -47,29 +86,29 @@ const SignButton = ({ hasCookie }: IProps) => {
     }, [isActive]);
 
     useEffect(() => {
-        document.body.addEventListener('click', handleUserMenu);
+        document.body.addEventListener('click', toggleUserMenu);
 
         return () => {
-            document.body.removeEventListener('click', handleUserMenu);
+            document.body.removeEventListener('click', toggleUserMenu);
         };
 
-    }, [handleUserMenu]);
+    }, [toggleUserMenu]);
 
-    const renderMenuItems = (arr: IMenuItem[]) => {
-        return arr.map(item => {
-            if (item.title === 'Sign Out') {
+    const renderMenuItems = (menuItems: IMenuItem[]) => {
+        return menuItems.map(menuItem => {
+            if (menuItem.title === 'Sign Out') {
                 return (
-                    <li key={item.title} className='text-base font-light px-5 py-2 hover:bg-gray-100'>
-                        <button onClick={() => signOut(item.path)}>
-                            {item.title}
+                    <li key={menuItem.title} className='text-base font-light px-5 py-2 hover:bg-gray-100'>
+                        <button onClick={() => signOut(menuItem.path)}>
+                            {menuItem.title}
                         </button>
                     </li>
                 );
             }
             return (
-                <li key={item.title} className='text-base font-light px-5 py-2 hover:bg-gray-100'>
-                    <Link href={item.path}>
-                        {item.title}
+                <li key={menuItem.title} className='text-base font-light px-5 py-2 hover:bg-gray-100'>
+                    <Link href={menuItem.path}>
+                        {menuItem.title}
                     </Link>
                 </li>
             );
@@ -78,11 +117,11 @@ const SignButton = ({ hasCookie }: IProps) => {
 
     const menuItemsList = renderMenuItems(menuItems);
 
-    if (hasCookie) {
+    if (userData) {
         return (
             <div className='relative'>
-                <button id="btn" className='text-light font-light block'>
-                    User Name
+                <button id="btn" className='text-light text-lg block'>
+                    {userData.username}
                 </button>
                 <ul className={`${isActive ? 'block' : 'hidden'} w-48 mt-2 bg-light absolute right-0 rounded-md py-2 border border-mainGrey`}>
                     {menuItemsList}

@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 
 const NavBar = () => {
 
-    const hasCookie = cookies().has('accessToken');
+    const accessCookie = cookies().get('accessToken');
     
 
     return (
@@ -16,7 +16,7 @@ const NavBar = () => {
                         djimmi
                     </Link>
 
-                    <SignButton hasCookie={hasCookie} />
+                    <SignButton accessCookie={accessCookie} />
                 </nav>
             </div>
         </header>

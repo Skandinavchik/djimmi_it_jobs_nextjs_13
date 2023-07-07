@@ -15,21 +15,26 @@ const GET = async (req: NextRequest, { params }: { params: Params }) => {
             },
         });
 
+        if (!user) {
+            const notFoundResponse = {
+                status: 'failed',
+                message: `User with ID: ${id} not found`,
+            };
+
+            return NextResponse.json(notFoundResponse, { status: 404 });
+        }
+
+        const { password, ...userWithoutPassword } = user;
+
         const response = {
             status: 'success',
-            user
-        };
-        const notFoundResponse = {
-            status: 'failed',
-            message: `User with ID: ${id} not found`,
+            user: userWithoutPassword,
         };
 
-        if (!user) return new NextResponse(JSON.stringify(notFoundResponse), { status: 404 });
-
-        return new NextResponse(JSON.stringify(response), { status: 200 });
+        return NextResponse.json(response, { status: 200 });
 
     } catch (error) {
-        return new NextResponse(JSON.stringify(error), { status: 500 });
+        return NextResponse.json(error, { status: 500 });
     }
 };
 
