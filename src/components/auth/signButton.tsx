@@ -4,6 +4,7 @@ import Link from "next/link";
 import ky from "ky";
 import { decodeJwt } from "jose";
 import { useCallback, useEffect, useState } from "react";
+import { IUserData, IUser } from "@/utils/types/userTypes";
 
 
 interface IProps {
@@ -13,20 +14,6 @@ interface IProps {
 interface IMenuItem {
     title: string;
     path: string;
-};
-
-interface IUser {
-    id: string;
-    username: string;
-    email: string;
-    role: string;
-    createdAt: Date;
-    updatedAt: Date;
-};
-
-interface IUserData {
-    status: string;
-    user: IUser;
 };
 
 const menuItems: IMenuItem[] = [
@@ -54,9 +41,11 @@ const getUserData = async (token: string): Promise<IUserData | undefined> => {
 };
 
 const signOut = async (path: string) => {
-    return await ky.post(`http://localhost:3000${path}`).json()
-        .then(() => window.location.replace('/'))
-        .catch(() => console.log());
+    try {
+        return await ky.post(`http://localhost:3000${path}`).json();
+    } catch (error) {
+        console.log();
+    }
 };
 
 
@@ -99,7 +88,9 @@ const SignButton = ({ accessCookie }: IProps) => {
             if (menuItem.title === 'Sign Out') {
                 return (
                     <li key={menuItem.title} className='text-base font-light px-5 py-2 hover:bg-gray-100'>
-                        <button onClick={() => signOut(menuItem.path)}>
+                        <button onClick={() => signOut(menuItem.path)
+                            .then(() => window.location.replace('/'))
+                            .catch(() => console.log())}>
                             {menuItem.title}
                         </button>
                     </li>

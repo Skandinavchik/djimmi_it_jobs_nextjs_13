@@ -2,6 +2,7 @@
 import ky from "ky";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Link from "next/link";
+import { IUserData } from '@/utils/types/userTypes';
 
 
 interface IFormInputs {
@@ -12,7 +13,7 @@ interface IFormInputs {
 const signIn = async (data: IFormInputs, url: string) => {
     return await ky.post(url, {
         json: data,
-    }).json();
+    }).json<IUserData>();
 };
 
 
@@ -27,9 +28,11 @@ const SignInForm = () => {
 
     const onSubmit: SubmitHandler<IFormInputs> = async (data: IFormInputs) => {
         await signIn(data, 'http://localhost:3000/api/signin')
-            .then(() => {
-                reset();
-                window.location.replace('/jobs');
+            .then(data => {
+                if (data) {
+                    reset();
+                    window.location.replace('/jobs');
+                }
             })
             .catch((e) => {
                 reset();

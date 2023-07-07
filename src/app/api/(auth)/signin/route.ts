@@ -39,7 +39,7 @@ const POST = async (req: NextRequest) => {
             return response;
 
         } else {
-            return NextResponse.json(null, { status: 401 });
+            return NextResponse.json({ error: 'Error' }, { status: 401 });
         }
     } catch (error) {
         console.log(error);
