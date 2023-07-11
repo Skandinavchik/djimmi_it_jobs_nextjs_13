@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SignButton from "./auth/signButton";
+import SignButton from "../auth/signButton";
 import { cookies } from 'next/headers';
 
 

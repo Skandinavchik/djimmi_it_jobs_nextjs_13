@@ -22,10 +22,6 @@ const menuItems: IMenuItem[] = [
         path: '/profile',
     },
     {
-        title: 'Settings',
-        path: '/settings',
-    },
-    {
         title: 'Sign Out',
         path: '/api/auth/signout',
     },
@@ -112,7 +108,7 @@ const SignButton = ({ accessCookie }: IProps) => {
                 <button id="btn" className='text-light text-lg block'>
                     {userData.username}
                 </button>
-                <ul className={`${isActive ? 'block' : 'hidden'} w-48 mt-2 bg-light absolute right-0 rounded-md py-2 border border-mainGrey`}>
+                <ul className={`${isActive ? 'block' : 'hidden'} w-48 bg-light absolute right-0 rounded-md py-2 border border-mainGrey`}>
                     {menuItemsList}
                 </ul>
             </div>

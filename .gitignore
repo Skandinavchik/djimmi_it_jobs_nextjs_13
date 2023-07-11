@@ -37,6 +37,8 @@ next-env.d.ts
 
 # docker
 Dockerfile
+
+# playwright
 /test-results/
 /playwright-report/
 /playwright/.cache/

@@ -88,7 +88,7 @@ const Home = () => {
                 </div>
             </section>
 
-            <section className='pt-10 pb-12 bg-white'>
+            <section className='pt-12 pb-12 bg-white'>
                 <div className='container'>
                     <h4 className='text-center font-light text-xs tracking-widest mb-6'>GREAT COMPANIES HIRE ON DJIMMI DIRECTLY</h4>
                     <ul className='flex justify-between items-center w-full'>
