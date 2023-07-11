@@ -30,6 +30,7 @@ const SignInForm = () => {
         await signIn(data, 'http://localhost:3000/api/signin')
             .then(data => {
                 if (data) {
+                    
                     reset();
                     window.location.replace('/jobs');
                 }
