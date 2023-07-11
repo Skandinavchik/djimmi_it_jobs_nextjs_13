@@ -1,10 +1,10 @@
 import { prisma } from "@/utils/prismaClient";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from 'bcrypt';
-import { signToken } from "@/utils/accessToken";
+import { signAccessToken } from "@/utils/accessToken";
 
 
-interface IUser {
+interface IRequestData {
     username: string;
     email: string;
     password: string;
@@ -12,7 +12,7 @@ interface IUser {
 
 const POST = async (req: NextRequest) => {
     try {
-        const data: IUser = await req.json();
+        const data: IRequestData = await req.json();
 
         const user = await prisma.user.create({
             data: {
@@ -24,21 +24,25 @@ const POST = async (req: NextRequest) => {
 
         const { password, ...userWithoutPassword } = user;
 
-        const token = await signToken(user.id);
+        const token = await signAccessToken(user);
 
-        const response = NextResponse.json({
-            status: 'success',
-            user: userWithoutPassword,
-        }, { status: 201 });
+        if (token) {
+            const response = NextResponse.json({
+                status: 'success',
+                user: userWithoutPassword,
+            }, { status: 201 });
 
-        response.cookies.set({
-            name: 'accessToken',
-            value: token,
-            httpOnly: true,
-            maxAge: 14 * 24 * 60 * 60,
-        });
+            response.cookies.set({
+                name: 'accessToken',
+                value: token,
+                httpOnly: true,
+                maxAge: 14 * 24 * 60 * 60,
+            });
 
-        return response;
+            return response;
+        }
+
+        return NextResponse.json({ error: 'Error' }, { status: 401 });
 
     } catch (error) {
         console.log(error);

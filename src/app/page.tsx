@@ -66,7 +66,7 @@ const Home = () => {
                         <Link href={'/'} className='bg-light text-mainGreen text-lg font-medium border rounded-full px-6 py-2.5 hover:shadow-md transition-all duration-300'>
                             Hire talent
                         </Link>
-                        <Link href={'/'} className='text-light text-lg font-medium border rounded-full px-6 py-2.5 hover:shadow-md transition-all duration-300'>
+                        <Link href={'/jobs'} className='text-light text-lg font-medium border rounded-full px-6 py-2.5 hover:shadow-md transition-all duration-300'>
                             Find a job
                         </Link>
                     </div>

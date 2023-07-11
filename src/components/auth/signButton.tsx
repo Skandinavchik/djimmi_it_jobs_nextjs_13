@@ -2,7 +2,7 @@
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import Link from "next/link";
 import ky from "ky";
-import { decodeJwt } from "jose";
+import { decodeAccessToken } from "@/utils/accessToken";
 import { useCallback, useEffect, useState } from "react";
 import { IUserData, IUser } from "@/types/userTypes";
 
@@ -31,12 +31,14 @@ const menuItems: IMenuItem[] = [
     },
 ];
 
-const getUserData = async (token: string): Promise<IUserData | undefined> => {
+const getUserData = async (token: string) => {
     try {
-        const decodedToken = decodeJwt(token);
-        return await ky(`http://localhost:3000/api/users/${decodedToken.id}`).json<IUserData>();
+        const user: IUser = decodeAccessToken(token).user as IUser;
+        return user;
+
     } catch (error) {
         console.log(error);
+        return null;
     }
 };
 
@@ -52,19 +54,15 @@ const signOut = async (path: string) => {
 const SignButton = ({ accessCookie }: IProps) => {
 
     const [isActive, setIsActive] = useState<boolean>(false);
-    const [userData, setUserData] = useState<IUser>();
+    const [userData, setUserData] = useState<IUser | null>();
 
     useEffect(() => {
         if (accessCookie?.name === 'accessToken') {
-
             getUserData(accessCookie.value)
-                .then(data => {
-                    if (data) {
-                        setUserData(data.user);
-                    }
-                })
-                .catch(e => console.log(e));
+                .then(data => setUserData(data))
+                .catch();
         }
+
     }, [accessCookie?.name, accessCookie?.value]);
 
     const toggleUserMenu = useCallback((e: MouseEvent): void => {

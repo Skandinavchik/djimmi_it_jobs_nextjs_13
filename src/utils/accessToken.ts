@@ -1,18 +1,36 @@
 import * as jose from 'jose';
+import { IUser } from '@/types/userTypes';
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 const alg = 'HS256';
 
-const signToken = async (id: string) => {
-    return await new jose.SignJWT({ id })
-        .setProtectedHeader({ alg })
-        .setIssuedAt()
-        .setExpirationTime(process.env.JWT_EXPIRES_IN as string)
-        .sign(secret);
+const signAccessToken = async (user: IUser) => {
+    try {
+        return await new jose.SignJWT({ user })
+            .setProtectedHeader({ alg })
+            .setExpirationTime(process.env.JWT_EXPIRES_IN as string)
+            .sign(secret);
+            
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+
 };
 
 const verifyAccessToken = async (token: string) => {
-    return await jose.jwtVerify(token, secret);
+    try {
+        const { payload } = await jose.jwtVerify(token, secret);
+        return payload;
+
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 };
 
-export { signToken, verifyAccessToken };
+const decodeAccessToken = (token: string) => {
+    return jose.decodeJwt(token);
+};
+
+export { signAccessToken, verifyAccessToken, decodeAccessToken };
