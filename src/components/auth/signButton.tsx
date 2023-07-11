@@ -4,7 +4,7 @@ import Link from "next/link";
 import ky from "ky";
 import { decodeJwt } from "jose";
 import { useCallback, useEffect, useState } from "react";
-import { IUserData, IUser } from "@/utils/types/userTypes";
+import { IUserData, IUser } from "@/types/userTypes";
 
 
 interface IProps {
@@ -27,7 +27,7 @@ const menuItems: IMenuItem[] = [
     },
     {
         title: 'Sign Out',
-        path: '/api/signout',
+        path: '/api/auth/signout',
     },
 ];
 

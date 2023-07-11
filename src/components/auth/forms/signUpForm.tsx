@@ -28,7 +28,7 @@ const SignUpForm = () => {
     });
 
     const onSubmit: SubmitHandler<IFormInputs> = async (data: IFormInputs) => {
-        await signUp(data, 'http://localhost:3000/api/signup')
+        await signUp(data, 'http://localhost:3000/api/auth/signup')
             .then(() => {
                 reset();
                 window.location.replace('/profile');

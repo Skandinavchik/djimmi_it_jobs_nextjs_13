@@ -2,7 +2,7 @@
 import ky from "ky";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Link from "next/link";
-import { IUserData } from '@/utils/types/userTypes';
+import { IUserData } from '@/types/userTypes';
 
 
 interface IFormInputs {
@@ -27,10 +27,9 @@ const SignInForm = () => {
     });
 
     const onSubmit: SubmitHandler<IFormInputs> = async (data: IFormInputs) => {
-        await signIn(data, 'http://localhost:3000/api/signin')
+        await signIn(data, 'http://localhost:3000/api/auth/signin')
             .then(data => {
                 if (data) {
-                    
                     reset();
                     window.location.replace('/jobs');
                 }
