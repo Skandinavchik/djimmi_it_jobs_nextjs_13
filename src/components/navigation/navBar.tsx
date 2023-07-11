@@ -4,7 +4,7 @@ import UserAccountButton from "../auth/userAccountButton";
 import { cookies } from 'next/headers';
 import { verifyAccessToken } from '@/libs/accessToken';
 
-const aaa = async (token: string | undefined) => {
+const getUserData = async (token: string | undefined) => {
     try {
         if (token) {
             return await verifyAccessToken(token);
@@ -26,7 +26,7 @@ const NavBar = () => {
                         djimmi
                     </Link>
 
-                    {accessCookie ? <UserAccountButton data={aaa(accessCookie)} /> : <SignInButton />}
+                    {accessCookie ? <UserAccountButton data={getUserData(accessCookie)} /> : <SignInButton />}
 
                 </nav>
             </div>

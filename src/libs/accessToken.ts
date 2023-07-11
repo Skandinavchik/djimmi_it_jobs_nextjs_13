@@ -7,7 +7,7 @@ const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 export const verifyAccessToken = async (token: string)  => {
     try {
         const data = await jose.jwtVerify(token, secret)
-        return data;
+        return data.payload.iss;
     } catch (error) {
         return;
     }

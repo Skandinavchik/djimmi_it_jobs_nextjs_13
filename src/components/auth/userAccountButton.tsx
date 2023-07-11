@@ -2,12 +2,11 @@
 import Link from "next/link";
 import ky from "ky";
 import { useCallback, useEffect, useState } from "react";
-import type { JWTVerifyResult } from "jose";
 
 
 
 interface IProps {
-    data: Promise<JWTVerifyResult | undefined>;
+    data: Promise<string | undefined>;
 };
 
 interface IMenuItem {
@@ -41,17 +40,7 @@ const signOut = async (path: string) => {
 const UserAccountButton = ({ data }: IProps) => {
 
     const [isActive, setIsActive] = useState<boolean>(false);
-    const [userData, setUserData] = useState<IUser | undefined>();
-
-    useEffect(() => {
-        data
-            .then(data => {
-                if (data) {
-                    console.log(data.payload.user);
-                    setUserData(data.payload.user as IUser);
-                }
-            });
-    }, [data]);
+    const [userData, setUserData] = useState<string | undefined>();
 
     const toggleUserMenu = useCallback((e: MouseEvent): void => {
         const target = e.target as HTMLElement;
@@ -73,7 +62,7 @@ const UserAccountButton = ({ data }: IProps) => {
         return menuItems.map(menuItem => {
             if (menuItem.title === 'Sign Out') {
                 return (
-                    <li key={menuItem.title} className='text-base font-light px-5 py-2 hover:bg-gray-100'>
+                    <li key={menuItem.title} className='text-sm font-light px-5 py-2 hover:bg-gray-100'>
                         <button onClick={() => signOut(menuItem.path)
                             .then(() => window.location.replace('/'))
                             .catch(() => console.log())}>
@@ -83,7 +72,7 @@ const UserAccountButton = ({ data }: IProps) => {
                 );
             }
             return (
-                <li key={menuItem.title} className='text-base font-light px-5 py-2 hover:bg-gray-100'>
+                <li key={menuItem.title} className='text-sm font-light px-5 py-2 hover:bg-gray-100'>
                     <Link href={menuItem.path}>
                         {menuItem.title}
                     </Link>
@@ -94,10 +83,18 @@ const UserAccountButton = ({ data }: IProps) => {
 
     const menuItemsList = renderMenuItems(menuItems);
 
+    useEffect(() => {
+        data.then(data => {
+            if (data) {
+                setUserData(data);
+            }
+        });
+    }, [data]);
+
     return (
         <div className='relative'>
             <button id="btn" className='text-light text-lg block'>
-                {userData?.username}
+                {userData}
             </button>
             <ul className={`${isActive ? 'block' : 'hidden'} w-48 bg-light absolute right-0 rounded-md py-2 border border-mainGrey`}>
                 {menuItemsList}
