@@ -1,7 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server'
 import { verifyAccessToken } from './utils/accessToken';
-import ky from 'ky';
-import { IUser } from './types/userTypes';
 
 
 export const config = {

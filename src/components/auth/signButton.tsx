@@ -4,7 +4,6 @@ import Link from "next/link";
 import ky from "ky";
 import { decodeAccessToken } from "@/utils/accessToken";
 import { useCallback, useEffect, useState } from "react";
-import { IUserData, IUser } from "@/types/userTypes";
 
 
 interface IProps {

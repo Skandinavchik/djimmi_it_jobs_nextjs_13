@@ -2,7 +2,6 @@
 import ky from "ky";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Link from "next/link";
-import { IUserData } from '@/types/userTypes';
 
 
 interface IFormInputs {
