@@ -16,6 +16,8 @@ declare global {
     };
 
     interface ITabsItem {
+        id: number;
         title: string;
+        content?: JSX.Element;
     };
 }

@@ -7,7 +7,7 @@ interface ITabsState {
 };
 
 const initialState: ITabsState = {
-    activeTab: 0,
+    activeTab: 1,
 };
 
 
