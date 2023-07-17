@@ -2,17 +2,19 @@ export { }
 
 declare global {
     interface IUser {
-        id: string;
+        _id: string;
         username: string;
         email: string;
+        password: string;
         role: string;
         createdAt: Date;
         updatedAt: Date;
     };
 
     interface IUserData {
-        status: string;
-        user: IUser;
+        status: 'success' | 'failed';
+        user?: IUser;
+        message?: string;
     };
 
     interface ITabsItem {

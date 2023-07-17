@@ -1,13 +1,13 @@
 'use client';
-import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import Link from "next/link";
 import ky from "ky";
-import { decodeAccessToken } from "@/utils/accessToken";
 import { useCallback, useEffect, useState } from "react";
+import type { JWTVerifyResult } from "jose";
+
 
 
 interface IProps {
-    accessCookie: RequestCookie | undefined;
+    data: Promise<JWTVerifyResult | undefined>;
 };
 
 interface IMenuItem {
@@ -22,43 +22,36 @@ const menuItems: IMenuItem[] = [
     },
     {
         title: 'Sign Out',
-        path: '/api/auth/signout',
+        path: '/api/v1.0/auth/logout',
     },
 ];
 
-const getUserData = async (token: string) => {
-    try {
-        const user: IUser = decodeAccessToken(token).user as IUser;
-        return user;
-
-    } catch (error) {
-        console.log(error);
-        return null;
-    }
-};
-
 const signOut = async (path: string) => {
     try {
-        return await ky.post(`http://localhost:3000${path}`).json();
+        return await ky.post(`http://localhost:8000${path}`, {
+            json: {},
+            credentials: 'include',
+        }).json();
     } catch (error) {
         console.log();
     }
 };
 
 
-const SignButton = ({ accessCookie }: IProps) => {
+const UserAccountButton = ({ data }: IProps) => {
 
     const [isActive, setIsActive] = useState<boolean>(false);
-    const [userData, setUserData] = useState<IUser | null>();
+    const [userData, setUserData] = useState<IUser | undefined>();
 
     useEffect(() => {
-        if (accessCookie?.name === 'accessToken') {
-            getUserData(accessCookie.value)
-                .then(data => setUserData(data))
-                .catch();
-        }
-
-    }, [accessCookie?.name, accessCookie?.value]);
+        data
+            .then(data => {
+                if (data) {
+                    console.log(data.payload.user);
+                    setUserData(data.payload.user as IUser);
+                }
+            });
+    }, [data]);
 
     const toggleUserMenu = useCallback((e: MouseEvent): void => {
         const target = e.target as HTMLElement;
@@ -101,24 +94,16 @@ const SignButton = ({ accessCookie }: IProps) => {
 
     const menuItemsList = renderMenuItems(menuItems);
 
-    if (userData) {
-        return (
-            <div className='relative'>
-                <button id="btn" className='text-light text-lg block'>
-                    {userData.username}
-                </button>
-                <ul className={`${isActive ? 'block' : 'hidden'} w-48 bg-light absolute right-0 rounded-md py-2 border border-mainGrey`}>
-                    {menuItemsList}
-                </ul>
-            </div>
-        );
-    }
-
     return (
-        <Link href={'/signin'} className='text-light text-base font-light border rounded-full px-5 py-2 hover:shadow-md transition-all duration-300'>
-            Sign In
-        </Link>
+        <div className='relative'>
+            <button id="btn" className='text-light text-lg block'>
+                {userData?.username}
+            </button>
+            <ul className={`${isActive ? 'block' : 'hidden'} w-48 bg-light absolute right-0 rounded-md py-2 border border-mainGrey`}>
+                {menuItemsList}
+            </ul>
+        </div>
     );
 };
 
-export default SignButton;
+export default UserAccountButton;

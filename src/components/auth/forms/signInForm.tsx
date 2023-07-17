@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import Link from "next/link";
 
 
+
 interface IFormInputs {
     email: string;
     password: string;
@@ -12,6 +13,7 @@ interface IFormInputs {
 const signIn = async (data: IFormInputs, url: string) => {
     return await ky.post(url, {
         json: data,
+        credentials: 'include',
     }).json<IUserData>();
 };
 
@@ -26,9 +28,9 @@ const SignInForm = () => {
     });
 
     const onSubmit: SubmitHandler<IFormInputs> = async (data: IFormInputs) => {
-        await signIn(data, 'http://localhost:3000/api/auth/signin')
+        await signIn(data, 'http://localhost:8000/api/v1.0/auth/signin')
             .then(data => {
-                if (data) {
+                if (data.status === 'success' && data.user) {
                     reset();
                     window.location.replace('/jobs');
                 }

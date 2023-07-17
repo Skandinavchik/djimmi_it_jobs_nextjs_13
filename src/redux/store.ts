@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import tabs from '@/redux/slices/tabsSlice';
 
 
+
 const store = configureStore({
     reducer: {
         tabs,

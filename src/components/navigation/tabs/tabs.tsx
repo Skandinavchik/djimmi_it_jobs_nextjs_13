@@ -1,5 +1,5 @@
 'use client';
-import { useAppDispatch, useAppSelector } from '@/app/hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks';
 import { handleActiveTab } from '@/redux/slices/tabsSlice';
 import { motion } from 'framer-motion';
 import ProfileContent from './content/profileContent';
@@ -44,7 +44,7 @@ const Tabs = () => {
                 return (
                     <li
                         key={item.title}
-                        className={`${activeTab === item.id ? 'text-mainGreen' : 'text-dark'} cursor-pointer transition-all duration-100 py-2 relative`}
+                        className={`${activeTab === item.id ? 'text-dark' : 'text-gray-500'} text-lg cursor-pointer transition-all duration-100 py-2 relative`}
                         onClick={() => dispatch(handleActiveTab(item.id))}
                     >
                         {item.title}
@@ -76,7 +76,7 @@ const Tabs = () => {
 
     return (
         <>
-            <ul className='flex justify-start items-end gap-5 mt-20'>
+            <ul className='flex justify-start items-end gap-6 mt-20'>
                 {tabsItemsList}
             </ul>
 
