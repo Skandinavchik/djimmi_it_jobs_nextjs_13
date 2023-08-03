@@ -2,7 +2,8 @@
 import ky from "ky";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Link from "next/link";
-import { IUserData } from '@/utils/types/userTypes';
+import { useEffect, useState } from 'react';
+import { redirect } from 'next/navigation';
 
 
 interface IFormInputs {
@@ -13,7 +14,8 @@ interface IFormInputs {
 const signIn = async (data: IFormInputs, url: string) => {
 	return await ky.post(url, {
 		json: data,
-	}).json<IUserData>();
+		credentials: 'include',
+	}).json<{ accessToken: string }>();
 };
 
 
@@ -26,17 +28,17 @@ const SignInForm = () => {
 		},
 	});
 
-	const onSubmit: SubmitHandler<IFormInputs> = async (data: IFormInputs) => {
-		await signIn(data, 'http://localhost:8000/api/v1.0/auth/signin')
-			.then(data => {
-				if (data.status === 'success' && data.user) {
+	const onSubmit: SubmitHandler<IFormInputs> = async (formInput: IFormInputs) => {
+		await signIn(formInput, 'http://localhost:8000/api/auth/signin')
+			.then(res => {
+				if (res.accessToken) {
 					reset();
 					window.location.replace('/jobs');
 				}
 			})
 			.catch((e) => {
-				reset();
 				console.log(e);
+				reset();
 			});
 	};
 
