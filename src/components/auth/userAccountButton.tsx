@@ -1,13 +1,13 @@
 'use client';
-import Link from "next/link";
 import ky from "ky";
 import { useCallback, useEffect, useState } from "react";
 import { JWTPayload } from 'jose';
+import { useRouter } from 'next/navigation';
 
 
 
 interface IProps {
-	data: Promise<JWTPayload | undefined>;
+	data: JWTPayload | undefined;
 };
 
 interface IMenuItem {
@@ -26,22 +26,13 @@ const menuItems: IMenuItem[] = [
 	},
 ];
 
-const signOut = async (path: string) => {
-	try {
-		return await ky.post(`http://localhost:8000${path}`, {
-			json: {},
-			credentials: 'include',
-		}).json();
-	} catch (error) {
-		console.log();
-	}
-};
+
 
 
 const UserAccountButton = ({ data }: IProps) => {
 
 	const [isActive, setIsActive] = useState<boolean>(false);
-	const [userData, setUserData] = useState<JWTPayload | undefined>();
+	const router = useRouter();
 
 	const toggleUserMenu = useCallback((e: MouseEvent): void => {
 		const target = e.target as HTMLElement;
@@ -59,24 +50,39 @@ const UserAccountButton = ({ data }: IProps) => {
 
 	}, [toggleUserMenu]);
 
+	const signOut = async (path: string) => {
+		try {
+			return await ky.post(`http://localhost:8000${path}`, {
+				json: {},
+				credentials: 'include',
+			}).json();
+		} catch (error) {
+			console.log();
+		}
+	};
+
 	const renderMenuItems = (menuItems: IMenuItem[]) => {
-		return menuItems.map(menuItem => {
-			if (menuItem.title === 'Sign Out') {
+		return menuItems.map(({ title, path }) => {
+			if (title === 'Sign Out') {
 				return (
-					<li key={menuItem.title} className='font-light px-5 py-2 hover:bg-gray-100'>
-						<button onClick={() => signOut(menuItem.path)
+					<li
+						key={title}
+						onClick={() => signOut(path)
 							.then(() => window.location.replace('/'))
-							.catch(() => console.log())}>
-							{menuItem.title}
-						</button>
+							.catch(() => console.log())}
+						className='font-light px-5 py-2 hover:bg-gray-100 cursor-pointer'
+					>
+						{title}
 					</li>
 				);
 			}
 			return (
-				<li key={menuItem.title} className='font-light px-5 py-2 hover:bg-gray-100'>
-					<Link href={menuItem.path}>
-						{menuItem.title}
-					</Link>
+				<li
+					key={title}
+					onClick={() => router.push(path)}
+					className='font-light px-5 py-2 hover:bg-gray-100 cursor-pointer'
+				>
+					{title}
 				</li>
 			);
 		});
@@ -84,18 +90,10 @@ const UserAccountButton = ({ data }: IProps) => {
 
 	const menuItemsList = renderMenuItems(menuItems);
 
-	useEffect(() => {
-		data.then(data => {
-			if (data) {
-				setUserData(data);
-			}
-		});
-	}, [data]);
-
 	return (
 		<div className='relative'>
-			<button id="btn" className='text-light text-lg block'>
-				{userData?.iss}
+			<button id="btn" className='text-light text-lg block px-2'>
+				{data?.iss}
 			</button>
 			<ul className={`${isActive ? 'block' : 'hidden'} w-48 bg-light absolute right-0 rounded-md py-2 border border-mainGrey`}>
 				{menuItemsList}
