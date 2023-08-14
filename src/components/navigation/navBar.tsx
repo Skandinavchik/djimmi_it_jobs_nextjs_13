@@ -1,6 +1,6 @@
 import Link from "next/link";
-import SignInButton from "../auth/signInButton";
-import UserAccountButton from "../auth/userAccountButton";
+import SignInButton from '@/components/auth/SignInButton'
+import UserAccountButton from '@/components/auth/UserAccountButton';
 import { cookies } from 'next/headers';
 import { verifyAccessToken } from '@/libs/accessToken';
 import { JWTPayload } from 'jose';
