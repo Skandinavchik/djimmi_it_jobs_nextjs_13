@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks';
 import { handleActiveTab } from '@/redux/slices/tabsSlice';
 import { motion } from 'framer-motion';
 import UserProfileForm from '@/components/forms/user/UserProfileForm';
-import UserCvForm from '@/components/forms/user/UserCVForm';
+import UserCvForm from '@/components/forms/user/UserCvForm';
 import UserSubscriptions from '@/components/forms/user/UserSubscriptions';
 
 const tabsItems: ITabsItem[] = [
@@ -76,13 +76,13 @@ const Tabs = () => {
 
 	return (
 		<>
-			<ul className='flex justify-start items-end gap-6 mt-20'>
-				{tabsItemsList}
-			</ul>
-
-			<div className='before:block before:border-t-[1px] before:border-mainGrey before:mb-10'>
-				{tabsContent}
+			<div className='after:block after:border-t-[1px] after:border-mainGrey before:mb-10'>
+				<ul className='flex justify-start items-end gap-6 mt-20'>
+					{tabsItemsList}
+				</ul>
 			</div>
+
+			{tabsContent}
 		</>
 
 	);
