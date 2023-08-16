@@ -1,5 +1,8 @@
 import Link from "next/link";
 import Carousel from "@/components/carousel";
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 
 
@@ -38,9 +41,10 @@ const Home = () => {
 		return arr.map(item => {
 			return (
 				<li key={item.company} className='flex flex-col justify-center items-center'>
-					<div className='h-20 w-20 rounded-full bg-mainGrey flex justify-center items-center mb-5'>
-						<p className='text-light font-bold text-2xl'>{item.company.slice(0, 1)}</p>
-					</div>
+					<Avatar className='w-16 h-16 text-lg font-medium mb-5'>
+						<AvatarImage />
+						<AvatarFallback>{item.company.slice(0, 1)}</AvatarFallback>
+					</Avatar>
 					<div>{item.company}</div>
 					<div className='font-semibold'>{item.position}</div>
 				</li>
@@ -54,7 +58,7 @@ const Home = () => {
 		<main className='min-h-screen'>
 			<section className='pt-24'>
 				<div className='container'>
-					<h1 className='text-3xl sm:text-5xl font-black text-center mb-6 text-light'>
+					<h1 className='text-3xl sm:text-5xl font-black text-center mb-6 text-zinc-900'>
 						<span className='block'>Hire talent or find a job:</span>
 						<span className='block '>remotely & on your own</span>
 					</h1>
@@ -64,41 +68,60 @@ const Home = () => {
 					</p>
 
 					<div className='flex justify-center items-center gap-5'>
-						<Link href={'/'} className='bg-light text-mainGreen text-lg font-medium border rounded-full px-6 py-2.5 hover:shadow-md transition-all duration-300'>
-							Hire talent
-						</Link>
-						<Link href={'/jobs'} className='text-light text-lg font-medium border rounded-full px-6 py-2.5 hover:shadow-md transition-all duration-300'>
-							Find a job
-						</Link>
+						<Button
+							asChild
+							size={'lg'}
+							className='text-lg'
+						>
+							<Link href={'/'}>
+								Hire talent
+							</Link>
+						</Button>
+
+						<Button
+							asChild
+							size={'lg'}
+							variant={'outline'}
+							className='text-lg'
+						>
+							<Link href={'/jobs'}>
+								Find a job
+							</Link>
+						</Button>
+
 					</div>
 
 					<div className='mt-20'>
-						<div className=' h-12 w-full bg-light rounded-t-2xl border-b flex justify-between items-center px-4'>
+						<div className=' h-12 w-full rounded-t-2xl border border-darkGrey flex justify-between items-center px-4'>
 							<div className='flex justify-center items-center gap-2'>
-								<div className='w-3 h-3 bg-mainGrey rounded-full' />
-								<div className='w-3 h-3 bg-mainGrey rounded-full' />
-								<div className='w-3 h-3 bg-mainGrey rounded-full' />
+								<div className='w-3 h-3 bg-darkGrey rounded-full' />
+								<div className='w-3 h-3 bg-darkGrey rounded-full' />
+								<div className='w-3 h-3 bg-darkGrey rounded-full' />
 							</div>
 							<div>
-								<div className='text-mainGrey text-lg font-semibold'>djm.</div>
+								<div className=' text-slate-400 text-lg font-semibold'>djm.</div>
 							</div>
 						</div>
 
-						<div className='h-[200px] sm:h-[552px] w-full bg-white border-b border-mainGrey' />
+						<div className='h-[200px] sm:h-[552px] w-full border-b border-x border-darkGrey bg-white' >
+
+						</div>
 					</div>
 				</div>
 			</section>
 
-			<section className='hidden sm:block pt-12 pb-12 bg-white'>
+			<section className='hidden sm:block pt-12 pb-12'>
 				<div className='container'>
 					<h4 className='text-center font-light text-xs tracking-widest mb-6'>GREAT COMPANIES HIRE ON DJIMMI DIRECTLY</h4>
-					<ul className='flex justify-between items-center w-full'>
+					<ul className='w-full grid grid-cols-5'>
 						{companiesHiredList}
 					</ul>
 				</div>
 			</section>
 
-			<section className='py-20 bg-light border-t border-mainGrey'>
+			<Separator />
+
+			<section className='py-20'>
 				<div className='container'>
 					<h5 className='text-center text-mainGreen text-xl font-semibold mb-6'>
 						Djimmi for hiring
@@ -110,12 +133,19 @@ const Home = () => {
 					</h2>
 
 					<div className='flex justify-center'>
-						<Link href={'/'} className='bg-mainGreen text-light text-lg font-medium border rounded-full border-mainGreen px-6 py-2.5 hover:shadow-md transition-all duration-300'>
-							Hire talent
-						</Link>
+						<Button
+							asChild
+							size={'lg'}
+							className='text-lg'
+						>
+							<Link href={'/'}>
+								Hire talent
+							</Link>
+						</Button>
+
 					</div>
 
-					<div className='mt-16 mb-12 h-[200px] sm:h-[400px] w-full bg-white rounded-xl border border-mainGrey'>
+					<div className='mt-16 mb-12 h-[200px] sm:h-[400px] w-full rounded-xl border border-darkGrey bg-white'>
 
 					</div>
 
@@ -145,7 +175,9 @@ const Home = () => {
 				</div>
 			</section>
 
-			<section className='py-20 bg-light border-t border-mainGrey'>
+			<Separator />
+
+			<section className='py-20'>
 				<div className='container'>
 					<h5 className='text-center text-mainGreen text-xl font-semibold mb-6'>
 						Djimmi for job search
@@ -157,12 +189,18 @@ const Home = () => {
 					</h2>
 
 					<div className='flex justify-center'>
-						<Link href={'/'} className='bg-mainGreen text-light text-lg font-medium border rounded-full border-mainGreen px-6 py-2.5 hover:shadow-md transition-all duration-300'>
-							Find a job
-						</Link>
+						<Button
+							asChild
+							size={'lg'}
+							className='text-lg'
+						>
+							<Link href={'/'}>
+								Find a job
+							</Link>
+						</Button>
 					</div>
 
-					<div className='mt-16 mb-12 h-[400px] w-full bg-white rounded-xl border border-mainGrey'>
+					<div className='mt-16 mb-12 h-[400px] w-full rounded-xl border border-darkGrey bg-white'>
 
 					</div>
 
@@ -192,7 +230,9 @@ const Home = () => {
 				</div>
 			</section>
 
-			<section className='py-20 bg-white border-t border-mainGrey'>
+			<Separator />
+
+			<section className='py-20'>
 				<div className='container'>
 					<h2 className='text-5xl font-bold text-center mb-6'>
 						What people say about Djimmi
@@ -200,6 +240,8 @@ const Home = () => {
 					<Carousel />
 				</div>
 			</section>
+
+			<Separator />
 
 			<section className='py-20'>
 				<div className='container'>
@@ -213,12 +255,26 @@ const Home = () => {
 					</p>
 
 					<div className='flex justify-center items-center gap-5'>
-						<Link href={'/'} className='bg-light text-mainGreen text-lg font-medium border rounded-full px-6 py-2.5 hover:shadow-md transition-all duration-300'>
-							Hire talent
-						</Link>
-						<Link href={'/'} className='text-light text-lg font-medium border rounded-full px-6 py-2.5 hover:shadow-md transition-all duration-300'>
-							Find a job
-						</Link>
+						<Button
+							asChild
+							size={'lg'}
+							className='text-lg'
+						>
+							<Link href={'/'}>
+								Hire talent
+							</Link>
+						</Button>
+
+						<Button
+							asChild
+							size={'lg'}
+							variant={'outline'}
+							className='text-lg'
+						>
+							<Link href={'/'}>
+								Find a job
+							</Link>
+						</Button>
 					</div>
 				</div>
 			</section>
