@@ -1,5 +1,5 @@
 import Link from "next/link";
-import UserAccountButton from '@/components/auth/UserAccountButton';
+import UserAccountButton from '@/components/auth/userAccountButton';
 import { cookies } from 'next/headers';
 import { verifyAccessToken } from '@/libs/accessToken';
 import { JWTPayload } from 'jose';

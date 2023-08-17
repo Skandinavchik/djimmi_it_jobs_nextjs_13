@@ -1,7 +1,23 @@
-import { useForm } from 'react-hook-form';
+'use client';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { COUNTRIES } from '@/constants/countries';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Slider } from '@/components/ui/slider';
+import {
+	Select,
+	SelectTrigger,
+	SelectValue,
+	SelectContent,
+	SelectGroup,
+	SelectLabel,
+	SelectItem
+} from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+
 
 
 
@@ -12,19 +28,16 @@ import { COUNTRIES } from '@/constants/countries';
 // 	country: yup.string(),
 // }).required();
 
-const textInputClassName: string = 'col-span-2 rounded-md border-0 ring-1 ring-inset ring-mainGrey focus:ring-2 focus:ring-inset focus:ring-mainGreen';
-const labelClassName: string = 'text-lg font-medium';
-
 
 
 const UserProfileForm = () => {
 
-	const { register, handleSubmit, formState: { errors } } = useForm({
+	const { register, control, handleSubmit, formState: { errors } } = useForm({
 		defaultValues: {
 			position: '',
 			salary: '',
-			experience: '0',
-			country: 'Select Country',
+			experience: [0],
+			country: '',
 			city: '',
 		},
 		mode: 'onBlur',
@@ -38,7 +51,7 @@ const UserProfileForm = () => {
 	const renderSelectCountryOptions = (arr: string[]) => {
 		return arr.map(item => {
 			return (
-				<option key={item} value={item}>{item}</option>
+				<SelectItem key={item} value={item}>{item}</SelectItem>
 			);
 		});
 	};
@@ -46,78 +59,102 @@ const UserProfileForm = () => {
 	const countriesOptionList = renderSelectCountryOptions(COUNTRIES);
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className='w-[800px] py-20'>
+		<form onSubmit={handleSubmit(onSubmit)} className='w-[800px]'>
 
 			<div className='grid grid-cols-3 gap-y-14 items-center'>
-				<label
+				<Label
 					htmlFor='position'
-					className={labelClassName}
+					className='text-lg font-medium'
 				>
 					Position
-				</label>
-				<input
+				</Label>
+				<Input
 					type="text"
 					{...register('position')}
-					className='col-span-2 rounded-md border-0 ring-1 ring-inset ring-mainGrey focus:ring-2 focus:ring-inset focus:ring-mainGreen'
+					placeholder='React Developer'
+					className='col-span-2'
 				/>
 
-				<label
+				<Label
 					htmlFor='salary'
-					className={labelClassName}
+					className='text-lg font-medium'
 				>
 					Salary Expectations
-				</label>
-				<input
+				</Label>
+				<Input
 					type="text"
 					{...register('salary')}
-					className={textInputClassName}
+					placeholder='2000€'
+					className='col-span-2'
 				/>
 
-				<label
+				<Label
 					htmlFor='experience'
-					className={labelClassName}
+					className='text-lg font-medium'
 				>
 					Work Experience
-				</label>
-				<input
-					type='range'
-					{...register('experience')}
-					className='col-span-2 cursor-pointer'
-					min={0}
-					max={10}
-					step={1}
+				</Label>
+				<Controller
+					control={control}
+					name='experience'
+					render={({ field: { onChange } }) => (
+						<Slider
+							onValueChange={onChange}
+							min={0}
+							max={10}
+							step={1}
+							className='col-span-2'
+						/>
+					)}
 				/>
 
-				<label
+				<Label
 					htmlFor='country'
-					className={labelClassName}
+					className='text-lg font-medium'
 				>
 					Country of Residence
-				</label>
-				<select
-					{...register('country')}
-					className={textInputClassName}
-				>
-					<option disabled selected >Select Country</option>
-					{countriesOptionList}
-				</select>
+				</Label>
+				<Controller
+					control={control}
+					name='country'
+					render={({ field: { onChange } }) => (
+						<Select
+							onValueChange={onChange}
+						>
+							<SelectTrigger className="h-10 col-span-2">
+								<SelectValue placeholder="Select Country" />
+							</SelectTrigger>
+							<SelectContent className='h-[48vh]'>
+								<SelectGroup>
+									<SelectLabel>Countries</SelectLabel>
+									{countriesOptionList}
+								</SelectGroup>
+							</SelectContent>
+						</Select>
+					)}
+				/>
 
-				<label
+				<Label
 					htmlFor='city'
-					className={labelClassName}
+					className='text-lg font-medium'
 				>
 					City of Residence
-				</label>
-				<input
+				</Label>
+				<Input
 					type="text"
 					{...register('city')}
-					className={textInputClassName}
+					placeholder='New York City'
+					className='col-span-2'
 				/>
-			</div>
 
-			{/* <button type='submit'>
-				Submit
-			</button> */}
+				<Button
+					type='submit'
+					size={'lg'}
+					className='col-span-2 col-start-2'
+				>
+					Update Profile
+				</Button>
+			</div>
 		</form>
 	);
 };

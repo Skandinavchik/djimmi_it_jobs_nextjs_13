@@ -76,9 +76,9 @@ const Carousel = () => {
 					<div className='flex justify-center items-center gap-5'>
 						<Avatar className='w-12 h-12 text-lg font-medium'>
 							<AvatarImage />
-							<AvatarFallback className='bg-lightGrey'>{carouselItems[index].fullName.slice(0, 1)}</AvatarFallback>
+							<AvatarFallback>{carouselItems[index].fullName.slice(0, 1)}</AvatarFallback>
 						</Avatar>
-						<p>{`${carouselItems[index].fullName}, ${carouselItems[index].position}`}</p>
+						<span>{`${carouselItems[index].fullName}, ${carouselItems[index].position}`}</span>
 					</div>
 				</motion.div>
 			</AnimatePresence>

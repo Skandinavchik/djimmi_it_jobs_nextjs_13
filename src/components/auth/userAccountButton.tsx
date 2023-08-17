@@ -1,6 +1,6 @@
 'use client';
 import ky from 'ky';
-import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useRouter } from 'next/navigation';
 import { JWTPayload } from 'jose';
 import {
@@ -38,7 +38,13 @@ const UserAccountButton = ({ data }: IProps) => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant={'ghost'}>{data?.iss}</Button>
+				<div className='flex justify-center items-center gap-2 cursor-pointer'>
+					<Avatar className='w-10 h-10 font-medium'>
+						<AvatarImage />
+						<AvatarFallback>{data && data.iss ? data.iss.slice(0, 1) : null}</AvatarFallback>
+					</Avatar>
+					<span>{data?.iss}</span>
+				</div>
 			</DropdownMenuTrigger>
 
 			<DropdownMenuContent
