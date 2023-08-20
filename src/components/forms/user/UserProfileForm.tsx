@@ -6,18 +6,8 @@ import { COUNTRIES } from '@/constants/countries';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
-import {
-	Select,
-	SelectTrigger,
-	SelectValue,
-	SelectContent,
-	SelectGroup,
-	SelectLabel,
-	SelectItem
-} from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
-
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 
 
 
@@ -49,9 +39,15 @@ const UserProfileForm = () => {
 	};
 
 	const renderSelectCountryOptions = (arr: string[]) => {
-		return arr.map(item => {
+		return arr.map((item: string) => {
 			return (
-				<SelectItem key={item} value={item}>{item}</SelectItem>
+				<SelectItem
+					key={item}
+					value={item}
+					className='text-main font-sans dark:text-main-light'
+				>
+					{item}
+				</SelectItem>
 			);
 		});
 	};
@@ -64,7 +60,7 @@ const UserProfileForm = () => {
 			<div className='grid grid-cols-3 gap-y-14 items-center'>
 				<Label
 					htmlFor='position'
-					className='text-lg font-medium'
+					className='text-base text-main font-sans font-medium dark:text-main-light'
 				>
 					Position
 				</Label>
@@ -72,12 +68,12 @@ const UserProfileForm = () => {
 					type="text"
 					{...register('position')}
 					placeholder='React Developer'
-					className='col-span-2'
+					className='col-span-2 font-sans'
 				/>
 
 				<Label
 					htmlFor='salary'
-					className='text-lg font-medium'
+					className='text-base text-main font-sans font-medium dark:text-main-light'
 				>
 					Salary Expectations
 				</Label>
@@ -85,12 +81,12 @@ const UserProfileForm = () => {
 					type="text"
 					{...register('salary')}
 					placeholder='2000€'
-					className='col-span-2'
+					className='col-span-2 font-sans'
 				/>
 
 				<Label
 					htmlFor='experience'
-					className='text-lg font-medium'
+					className='text-base text-main font-sans font-medium dark:text-main-light'
 				>
 					Work Experience
 				</Label>
@@ -110,25 +106,21 @@ const UserProfileForm = () => {
 
 				<Label
 					htmlFor='country'
-					className='text-lg font-medium'
+					className='text-base text-main font-sans font-medium dark:text-main-light'
 				>
 					Country of Residence
 				</Label>
 				<Controller
 					control={control}
 					name='country'
-					render={({ field: { onChange } }) => (
-						<Select
-							onValueChange={onChange}
-						>
-							<SelectTrigger className="h-10 col-span-2">
+					render={({ field: { onChange, value } }) => (
+						<Select onValueChange={onChange}>
+							<SelectTrigger className={`${value === '' ? 'text-slate-500 dark:text-slate-400' : 'text-main dark:text-main-light'} h-10 col-span-2 font-sans`}>
 								<SelectValue placeholder="Select Country" />
 							</SelectTrigger>
-							<SelectContent className='h-[48vh]'>
-								<SelectGroup>
-									<SelectLabel>Countries</SelectLabel>
-									{countriesOptionList}
-								</SelectGroup>
+
+							<SelectContent className='max-h-[48vh]'>
+								{countriesOptionList}
 							</SelectContent>
 						</Select>
 					)}
@@ -136,7 +128,7 @@ const UserProfileForm = () => {
 
 				<Label
 					htmlFor='city'
-					className='text-lg font-medium'
+					className='text-base text-main font-sans font-medium dark:text-main-light'
 				>
 					City of Residence
 				</Label>
@@ -144,13 +136,13 @@ const UserProfileForm = () => {
 					type="text"
 					{...register('city')}
 					placeholder='New York City'
-					className='col-span-2'
+					className='col-span-2 font-sans'
 				/>
 
 				<Button
 					type='submit'
 					size={'lg'}
-					className='col-span-2 col-start-2'
+					className='col-span-2 col-start-2 font-sans text-lg font-normal'
 				>
 					Update Profile
 				</Button>

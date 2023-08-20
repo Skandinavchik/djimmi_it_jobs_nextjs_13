@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import UserProfileForm from '@/components/forms/user/UserProfileForm';
+import { Button } from '@/components/ui/button';
 
 
 
@@ -11,18 +12,22 @@ const ProfilePage = () => {
 
 
 	return (
-		<main className='bg-light'>
+		<main>
 			<div className='container'>
-				<section className='py-20 min-h-[calc(100vh-5rem-193px)]'>
-					<h1 className='text-3xl font-medium mb-5'>My profile</h1>
-					<Link href={'/'}
-						className='font-light hover:text-mainGreen transition-all duration-100'
+				<section className='pt-10 pb-20 min-h-[calc(100vh-5rem-197px)]'>
+					<h1 className='text-3xl text-main font-sans mb-5 dark:text-main-light'>My profile</h1>
+					<Button
+						asChild
+						variant={'link'}
+						className='text-main text-base font-sans font-light px-0'
 					>
-						View public Profile
-					</Link>
+						<Link href={'/'}>
+							View public Profile
+						</Link>
+					</Button>
 
 					<Tabs defaultValue="profile" className="w-full">
-						<TabsList className="grid w-full grid-cols-5 mt-20 mb-20">
+						<TabsList className="grid w-full grid-cols-5 mt-20 mb-20 font-sans">
 							<TabsTrigger value="profile">Profile</TabsTrigger>
 							<TabsTrigger value="contacts">CV and Contacts</TabsTrigger>
 							<TabsTrigger value="subscriptions">Subscriptions</TabsTrigger>
