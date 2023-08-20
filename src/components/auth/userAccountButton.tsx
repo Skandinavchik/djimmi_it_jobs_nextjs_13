@@ -13,6 +13,7 @@ import {
 	DropdownMenuShortcut,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from '../ui/button';
 
 
 
@@ -39,11 +40,11 @@ const UserAccountButton = ({ data }: IProps) => {
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<div className='flex justify-center items-center gap-2 cursor-pointer'>
-					<Avatar className='w-10 h-10 font-medium'>
+					<Avatar className='w-10 h-10 text-main font-sans font-normal dark:text-main-light'>
 						<AvatarImage />
 						<AvatarFallback>{data && data.iss ? data.iss.slice(0, 1) : null}</AvatarFallback>
 					</Avatar>
-					<span>{data?.iss}</span>
+					<Button variant={'link'} className='text-main text-[1rem] font-sans font-normal px-0 dark:text-main-light'>{data?.iss}</Button>
 				</div>
 			</DropdownMenuTrigger>
 
@@ -51,17 +52,16 @@ const UserAccountButton = ({ data }: IProps) => {
 				align='end'
 				className="w-56"
 			>
-				<DropdownMenuLabel>My Account</DropdownMenuLabel>
+				<DropdownMenuLabel className='text-main font-sans dark:text-main-light'>My Account</DropdownMenuLabel>
 
 				<DropdownMenuSeparator />
 
 				<DropdownMenuGroup>
 					<DropdownMenuItem
 						onClick={() => router.push('/profile')}
-						className='cursor-pointer'
+						className='text-main font-sans font-light cursor-pointer dark:text-main-light'
 					>
 						Profile
-						<DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
 					</DropdownMenuItem>
 				</DropdownMenuGroup>
 
@@ -72,10 +72,9 @@ const UserAccountButton = ({ data }: IProps) => {
 						.then(() => window.location.replace('/'))
 						.catch((e) => console.log(e))
 					}
-					className='cursor-pointer'
+					className='text-main font-sans font-light cursor-pointer dark:text-main-light'
 				>
 					Sign Out
-					<DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
 				</DropdownMenuItem>
 
 			</DropdownMenuContent>

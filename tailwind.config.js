@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	darkMode: ["class"],
+	darkMode: ['class'],
 	content: [
 		'./pages/**/*.{ts,tsx}',
 		'./components/**/*.{ts,tsx}',
@@ -13,9 +13,19 @@ module.exports = {
 			padding: "1rem",
 		},
 		extend: {
+			fontFamily: {
+				sans: ['var(--font-ubuntu)'],
+				mono: ['var(--font-ubuntu_mono)'],
+			},
 			colors: {
-				lightGrey: '#f1f5f9',
-				darkGrey: '#e2e8f0',
+				main: {
+					DEFAULT: '#0f172a',
+					light: '#f8fafc',
+				},
+				grey: {
+					light: '#f1f5f9',
+					dark: '#e2e8f0',
+				},
 			},
 			keyframes: {
 				"accordion-down": {

@@ -72,19 +72,19 @@ const Carousel = () => {
 					key={index}
 					className='w-[800px] h-full flex flex-col justify-center items-center'
 				>
-					<p className='max-w-[500px] text-center text-lg font-light italic mb-6'>{carouselItems[index].review}</p>
+					<p className='max-w-[500px] text-main text-center text-[1rem] font-sans font-light italic mb-6 dark:text-main-light'>{carouselItems[index].review}</p>
 					<div className='flex justify-center items-center gap-5'>
-						<Avatar className='w-12 h-12 text-lg font-medium'>
+						<Avatar className='w-12 h-12 text-main text-lg font-sans font-normal dark:text-main-light'>
 							<AvatarImage />
 							<AvatarFallback>{carouselItems[index].fullName.slice(0, 1)}</AvatarFallback>
 						</Avatar>
-						<span>{`${carouselItems[index].fullName}, ${carouselItems[index].position}`}</span>
+						<span className='text-main text-lg font-sans font-medium dark:text-main-light'>{`${carouselItems[index].fullName}, ${carouselItems[index].position}`}</span>
 					</div>
 				</motion.div>
 			</AnimatePresence>
 			<ChevronRightIcon
 				className='w-10 h-10 text-slate-400 cursor-pointer'
-				onClick={prevItem}
+				onClick={nextItem}
 			/>
 		</div>
 	);

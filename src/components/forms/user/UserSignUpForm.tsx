@@ -79,40 +79,43 @@ const UserSignUpForm = () => {
 				{...register('username', { required: 'Username is required' })}
 				type="text"
 				placeholder="Username"
+				className='font-sans'
 			/>
-			<div className='mb-1 h-7 pt-1 pb-2 pl-1 text-xs font-light text-red-700'>{errors.username?.message || ' '}</div>
+			<div className='mb-1 h-7 pt-1 pb-2 pl-1 text-[0.72rem] font-sans font-light text-red-700 dark:text-red-400'>{errors.username?.message || ' '}</div>
 
 			<Input
 				{...register('email', { required: 'Email is required' })}
 				type="email"
 				placeholder="Email"
+				className='font-sans'
 			/>
-			<div className='mb-1 h-7 pt-1 pb-2 pl-1 text-xs font-light text-red-700'>{errors.email?.message || ' '}</div>
+			<div className='mb-1 h-7 pt-1 pb-2 pl-1 text-[0.72rem] font-sans font-light text-red-700 dark:text-red-400'>{errors.email?.message || ' '}</div>
 
 			<Input
 				{...register('password', { required: 'Password is required' })}
 				type="password"
 				placeholder="Password"
+				className='font-sans'
 			/>
-			<div className='h-7 pt-1 pb-2 pl-1 text-xs font-light text-red-700'>{errors.password?.message || ' '}</div>
+			<div className='h-7 pt-1 pb-2 pl-1 text-[0.72rem] font-sans font-light text-red-700 dark:text-red-400'>{errors.password?.message || ' '}</div>
 
 			<Button
 				type='submit'
 				size={'lg'}
 				disabled={isSubmitting ? true : false}
-				className='text-lg mt-7 w-full'
+				className='text-lg font-sans font-normal mt-7 w-full'
 			>
 				{isSubmitting ? <ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> : null}
 				{isSubmitting ? 'Loading...' : 'Sign Up'}
 			</Button>
 
 			<div className='flex justify-center mt-4'>
-				<div className='font-light text-sm'>
+				<div className='text-main font-sans font-light text-sm dark:text-main-light'>
 					{`Already have an account? `}
 					<Button
 						asChild
 						variant={'link'}
-						className='px-1'
+						className='px-1 font-normal'
 					>
 						<Link href={'/signin'}>Sign In</Link>
 					</Button>
