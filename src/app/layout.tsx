@@ -28,7 +28,11 @@ const metadata = {
 
 const RootLayout = ({ children, }: { children: React.ReactNode }) => {
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html
+			lang="en"
+			suppressHydrationWarning
+			className='scroll-smooth'
+		>
 			<body className={`${ubuntu.variable} ${ubuntu_mono.variable} bg-main-light dark:bg-main`}>
 				<ThemeProvider>
 					<ReduxProvider>

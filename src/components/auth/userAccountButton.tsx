@@ -44,7 +44,7 @@ const UserAccountButton = ({ data }: IProps) => {
 						<AvatarImage />
 						<AvatarFallback>{data && data.iss ? data.iss.slice(0, 1) : null}</AvatarFallback>
 					</Avatar>
-					<Button variant={'link'} className='text-main text-[1rem] font-sans font-normal px-0 dark:text-main-light'>{data?.iss}</Button>
+					<span className='text-main text-[1rem] font-sans dark:text-main-light'>{data?.iss}</span>
 				</div>
 			</DropdownMenuTrigger>
 

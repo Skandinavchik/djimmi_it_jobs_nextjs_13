@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
+import { EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 
 
 
@@ -23,7 +24,7 @@ const signIn = async (data: IFormInputs, url: string) => {
 
 const UserSignInForm = () => {
 
-	const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<IFormInputs>({
+	const { register, handleSubmit, reset, formState: { errors, dirtyFields, isSubmitting } } = useForm<IFormInputs>({
 		defaultValues: {
 			email: '',
 			password: '',
@@ -48,21 +49,35 @@ const UserSignInForm = () => {
 		<form
 			noValidate
 			onSubmit={handleSubmit(onSubmit)}>
-			<Input
-				{...register('email', { required: 'Email is required' })}
-				type="email"
-				placeholder="Email"
-				className='font-sans'
-			/>
-			<div className='mb-1 h-7 pt-1 pb-2 pl-1 text-[0.72rem] font-sans font-light text-red-700 dark:text-red-400'>{errors.email?.message || ' '}</div>
+			<div>
+				<div className='relative'>
+					<EnvelopeIcon className={`absolute left-2 top-1/2 -translate-y-1/2 w-4 ${dirtyFields.email ? 'text-main' : 'text-slate-500'}`} />
+					<Input
+						{...register('email', { required: 'Email is required' })}
+						type="email"
+						placeholder="Email"
+						className='font-sans pl-8'
+					/>
+				</div>
+				<div className='mb-1 h-7 pt-1 pb-2 pl-1 text-[0.72rem] font-sans font-light text-red-700 dark:text-red-400'>
+					{errors.email?.message || ' '}
+				</div>
+			</div>
 
-			<Input
-				{...register('password', { required: 'Password is required' })}
-				type="password"
-				placeholder="Password"
-				className='font-sans'
-			/>
-			<div className='h-7 pt-1 pb-2 pl-1 text-[0.72rem] font-sans font-light text-red-700 dark:text-red-400'>{errors.password?.message || ' '}</div>
+			<div>
+				<div className='relative'>
+					<LockClosedIcon className={`absolute left-2 top-1/2 -translate-y-1/2 w-4 ${dirtyFields.password ? 'text-main' : 'text-slate-500'}`} />
+					<Input
+						{...register('password', { required: 'Password is required' })}
+						type="password"
+						placeholder="Password"
+						className='font-sans pl-8'
+					/>
+				</div>
+				<div className='h-7 pt-1 pb-2 pl-1 text-[0.72rem] font-sans font-light text-red-700 dark:text-red-400'>
+					{errors.password?.message || ' '}
+				</div>
+			</div>
 
 			<Button
 				type='submit'

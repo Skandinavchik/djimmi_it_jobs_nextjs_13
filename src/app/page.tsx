@@ -3,6 +3,7 @@ import Carousel from "@/components/carousel";
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import ScrollUpButton from '@/components/navigation/ScrollUpButton';
 
 
 
@@ -58,6 +59,7 @@ const Home = () => {
 
 	return (
 		<main>
+			<ScrollUpButton />
 			<section className='pt-24'>
 				<div className='container'>
 					<h1 className='text-3xl sm:text-5xl text-main font-sans font-medium text-center mb-6 dark:text-main-light'>
