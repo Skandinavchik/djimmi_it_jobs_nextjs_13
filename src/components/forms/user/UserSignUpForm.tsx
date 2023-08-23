@@ -78,7 +78,7 @@ const UserSignUpForm = () => {
 			onSubmit={handleSubmit(onSubmit)}>
 			<div>
 				<div className='relative'>
-					<UserIcon className={`absolute left-2 top-1/2 -translate-y-1/2 w-4 ${dirtyFields.username ? 'text-main' : 'text-slate-500'}`} />
+					<UserIcon className={`absolute left-2 top-1/2 -translate-y-1/2 w-4 ${dirtyFields.username ? 'text-main dark:text-main-light' : 'text-slate-500'}`} />
 					<Input
 						{...register('username', { required: 'Username is required' })}
 						type="text"
@@ -93,7 +93,7 @@ const UserSignUpForm = () => {
 
 			<div>
 				<div className='relative'>
-					<EnvelopeIcon className={`absolute left-2 top-1/2 -translate-y-1/2 w-4 ${dirtyFields.email ? 'text-main' : 'text-slate-500'}`} />
+					<EnvelopeIcon className={`absolute left-2 top-1/2 -translate-y-1/2 w-4 ${dirtyFields.email ? 'text-main dark:text-main-light' : 'text-slate-500'}`} />
 					<Input
 						{...register('email', { required: 'Email is required' })}
 						type="email"
@@ -108,7 +108,7 @@ const UserSignUpForm = () => {
 
 			<div>
 				<div className='relative'>
-					<LockClosedIcon className={`absolute left-2 top-1/2 -translate-y-1/2 w-4 ${dirtyFields.password ? 'text-main' : 'text-slate-500'}`} />
+					<LockClosedIcon className={`absolute left-2 top-1/2 -translate-y-1/2 w-4 ${dirtyFields.password ? 'text-main dark:text-main-light' : 'text-slate-500'}`} />
 					<Input
 						{...register('password', { required: 'Password is required' })}
 						type="password"
