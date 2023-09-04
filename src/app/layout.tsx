@@ -2,7 +2,7 @@ import '@/styles/globals.css';
 import { Ubuntu, Ubuntu_Mono } from 'next/font/google';
 import NavBar from '@/components/navigation/navBar';
 import Footer from '@/components/navigation/footer';
-import ReduxProvider from '@/redux/provider';
+
 import ThemeProvider from '@/components/theme/ThemeProvider';
 
 
@@ -35,11 +35,11 @@ const RootLayout = ({ children, }: { children: React.ReactNode }) => {
 		>
 			<body className={`${ubuntu.variable} ${ubuntu_mono.variable} bg-main-light dark:bg-main`}>
 				<ThemeProvider>
-					<ReduxProvider>
-						<NavBar />
-						{children}
-						<Footer />
-					</ReduxProvider>
+
+					<NavBar />
+					{children}
+					<Footer />
+
 				</ThemeProvider>
 			</body>
 		</html>

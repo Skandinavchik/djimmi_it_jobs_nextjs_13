@@ -7,8 +7,12 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import SelectSkillsField from '@/components/forms/fields/SelectSkillsField';
 import SelectCountriesField from '@/components/forms/fields/SelectCountriesField';
-import { ComputerDesktopIcon, BanknotesIcon, MapIcon, MapPinIcon, WrenchScrewdriverIcon } from '@heroicons/react/24/outline';
-import SliderExperience from '../fields/SliderExperience';
+import SliderExperience from '@/components/forms/fields/SliderExperience';
+import SelectCategory from '@/components/forms/fields/SelectCategoryField';
+import EnglishLevel from '@/components/forms/fields/EnglishLevel';
+import EmploymentOptions from '@/components/forms/fields/EmploymentOptions';
+import { ComputerDesktopIcon, BanknotesIcon, MapIcon, MapPinIcon, WrenchScrewdriverIcon, TagIcon } from '@heroicons/react/24/outline';
+
 
 
 
@@ -24,6 +28,9 @@ const UserProfileForm = () => {
 			city: '',
 			relocateCity: false,
 			skills: [''],
+			category: '',
+			englishLevel: '',
+			employmentOptions: ['']
 		},
 	});
 
@@ -205,6 +212,74 @@ const UserProfileForm = () => {
 									onChange={onChange}
 									value={value}
 								/>
+							)}
+						/>
+					</div>
+				</div>
+
+				{/* ===== Select Category Field ===== */}
+
+				<Label
+					htmlFor='category'
+					className='text-base text-main font-sans font-medium dark:text-main-light leading-10'
+				>
+					Category
+				</Label>
+				<div className='col-span-2'>
+					<div className='relative font-sans'>
+						<TagIcon className={`absolute left-2 top-1/2 -translate-y-1/2 w-4 ${dirtyFields.category ? 'text-main dark:text-main-light' : 'text-slate-500'}`} />
+						<Controller
+							control={control}
+							name='category'
+							render={({ field: { onChange, value } }) => (
+								<SelectCategory
+									onChange={onChange}
+									value={value}
+								/>
+							)}
+						/>
+					</div>
+				</div>
+
+				{/* ===== English Level Field ===== */}
+
+				<Label
+					htmlFor='englishLevel'
+					className='text-base text-main font-sans font-medium dark:text-main-light leading-10'
+				>
+					English Level
+				</Label>
+
+				<div className='col-span-2'>
+					<div className='relative font-sans'>
+
+						<Controller
+							control={control}
+							name='englishLevel'
+							render={({ field: { onChange } }) => (
+								<EnglishLevel onChange={onChange} />
+							)}
+						/>
+					</div>
+				</div>
+
+				{/* ===== Employment Options Field ===== */}
+
+				<Label
+					htmlFor='employmentOptions'
+					className='text-base text-main font-sans font-medium dark:text-main-light leading-10'
+				>
+					Employment Options
+				</Label>
+
+				<div className='col-span-2'>
+					<div className='relative font-sans'>
+
+						<Controller
+							control={control}
+							name='employmentOptions'
+							render={({ field: { onChange, value } }) => (
+								<EmploymentOptions onChange={onChange} value={value} />
 							)}
 						/>
 					</div>

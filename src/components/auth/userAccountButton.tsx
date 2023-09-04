@@ -10,18 +10,14 @@ import {
 	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
-	DropdownMenuShortcut,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from '../ui/button';
-
 
 
 
 interface IProps {
 	data: JWTPayload | undefined;
 };
-
 
 
 const UserAccountButton = ({ data }: IProps) => {
@@ -49,7 +45,7 @@ const UserAccountButton = ({ data }: IProps) => {
 			</DropdownMenuTrigger>
 
 			<DropdownMenuContent
-				align='end'
+				align='start'
 				className="w-56"
 			>
 				<DropdownMenuLabel className='text-main font-sans dark:text-main-light'>My Account</DropdownMenuLabel>
